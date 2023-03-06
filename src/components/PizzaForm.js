@@ -1,8 +1,7 @@
 import React from "react";
+import PizzaList from "./PizzaList";
 
-function PizzaForm({setFormTopping, formTopping, formSize, setFormSize}) {
-
-  //onClick, change select option to pizza.size
+function PizzaForm({setFormTopping, formTopping, formSize, setFormSize, setVeg, veg, setPizzas, pizzas}) {
 
   function handleSize(e){
     setFormSize(e.target.value)
@@ -12,14 +11,33 @@ function PizzaForm({setFormTopping, formTopping, formSize, setFormSize}) {
     setFormTopping(e.target.value)
   }
 
-  console.log(formSize)
-  console.log(formTopping)
+  function handleVegetarian(e) {
+    setVeg(e.target.value)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    let newPizza = {
+      topping: formTopping,
+      size: formSize,
+      vegetarian: veg
+    };
+    fetch('http://localhost:3001/pizzas', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newPizza)
+    })
+    .then(r => r.json())
+    .then(pizza => setPizzas([...pizzas, pizza]))
+  }
 
   return (
-    <form onChange={handleTopping} onSubmit={null /*handle that submit*/}>
+    <form onSubmit={handleSubmit}>
       <div className="form-row">
         <div className="col-5">
-          <input
+          <input onChange={handleTopping}
             className="form-control"
             type="text"
             name="topping"
@@ -40,7 +58,9 @@ function PizzaForm({setFormTopping, formTopping, formSize, setFormSize}) {
               className="form-check-input"
               type="radio"
               name="vegetarian"
+              checked={veg ? true : false}
               value="Vegetarian"
+              onClick={handleVegetarian}
             />
             <label className="form-check-label">Vegetarian</label>
           </div>
@@ -49,7 +69,9 @@ function PizzaForm({setFormTopping, formTopping, formSize, setFormSize}) {
               className="form-check-input"
               type="radio"
               name="vegetarian"
+              checked={veg ? false : true}
               value="Not Vegetarian"
+              onClick={handleVegetarian}
             />
             <label className="form-check-label">Not Vegetarian</label>
           </div>

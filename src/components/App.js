@@ -8,6 +8,7 @@ function App() {
   const [pizzas, setPizzas] = useState([])
   const [formTopping, setFormTopping] = useState("")
   const [formSize, setFormSize] = useState("Small")
+  const [veg, setVeg] = useState("")
 
   useEffect(() => {
     return(
@@ -20,12 +21,13 @@ function App() {
   function editPizza(pizza){
     setFormTopping(pizza.topping)
     setFormSize(pizza.size)
+    setVeg(pizza.vegetarian)
   }
 
   return (
     <>
       <Header />
-      <PizzaForm formTopping={formTopping} setFormTopping={setFormTopping} formSize={formSize} setFormSize={setFormSize}/>
+      <PizzaForm pizzas={pizzas} setPizzas={setPizzas} veg={veg} setVeg={setVeg} formTopping={formTopping} setFormTopping={setFormTopping} formSize={formSize} setFormSize={setFormSize}/>
       <PizzaList pizzas={pizzas} editPizza={editPizza}/>
     </>
   );
