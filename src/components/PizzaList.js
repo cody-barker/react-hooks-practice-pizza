@@ -1,9 +1,9 @@
 import React from "react";
 import Pizza from "./Pizza";
 
-function PizzaList({pizzas}) {
+function PizzaList({pizzas, editPizza}) {
   
-  const pizzaComps = pizzas.map(pizza => <Pizza pizza={pizza} key={pizza.id}/>)
+  const pizzaComps = pizzas.map(pizza => <Pizza pizza={pizza} key={pizza.id} editPizza={editPizza}/>)
   
   return (
     <table className="table table-striped">

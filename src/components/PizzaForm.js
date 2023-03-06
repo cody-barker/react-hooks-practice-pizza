@@ -1,8 +1,22 @@
 import React from "react";
 
-function PizzaForm() {
+function PizzaForm({setFormTopping, formTopping, formSize, setFormSize}) {
+
+  //onClick, change select option to pizza.size
+
+  function handleSize(e){
+    setFormSize(e.target.value)
+  }
+
+  function handleTopping(e) {
+    setFormTopping(e.target.value)
+  }
+
+  console.log(formSize)
+  console.log(formTopping)
+
   return (
-    <form onSubmit={null /*handle that submit*/}>
+    <form onChange={handleTopping} onSubmit={null /*handle that submit*/}>
       <div className="form-row">
         <div className="col-5">
           <input
@@ -10,10 +24,11 @@ function PizzaForm() {
             type="text"
             name="topping"
             placeholder="Pizza Topping"
+            value={formTopping}
           />
         </div>
         <div className="col">
-          <select className="form-control" name="size">
+          <select onChange={handleSize} className="form-control" name="size" value={formSize}>
             <option value="Small">Small</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>

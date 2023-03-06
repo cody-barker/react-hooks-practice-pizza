@@ -6,6 +6,8 @@ import PizzaList from "./PizzaList";
 function App() {
 
   const [pizzas, setPizzas] = useState([])
+  const [formTopping, setFormTopping] = useState("")
+  const [formSize, setFormSize] = useState("Small")
 
   useEffect(() => {
     return(
@@ -15,11 +17,16 @@ function App() {
     )
   },[])
 
+  function editPizza(pizza){
+    setFormTopping(pizza.topping)
+    setFormSize(pizza.size)
+  }
+
   return (
     <>
       <Header />
-      <PizzaForm />
-      <PizzaList pizzas={pizzas}/>
+      <PizzaForm formTopping={formTopping} setFormTopping={setFormTopping} formSize={formSize} setFormSize={setFormSize}/>
+      <PizzaList pizzas={pizzas} editPizza={editPizza}/>
     </>
   );
 }
